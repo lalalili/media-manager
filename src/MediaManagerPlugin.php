@@ -21,6 +21,7 @@ class MediaManagerPlugin implements Plugin
     {
         $pages = collect(config('media-manager.pages', []))
             ->filter(fn (string $page): bool => class_exists($page))
+            ->unique()
             ->values()
             ->all();
 

@@ -5,7 +5,7 @@ Reusable Filament and Livewire media manager package for Laravel applications.
 ## Features
 
 - Configurable folder, video, and media model classes.
-- Configurable Filament page registration.
+- Configurable Filament page registration with a starter File Manager page.
 - Media tenant resolver contract for host-specific admin access rules.
 - Command to ensure root folders exist.
 
@@ -67,5 +67,13 @@ $panel->plugins([
 Create required root folders:
 
 ```bash
-php artisan media-manager:ensure-root-folders
+php artisan media-manager:ensure-root-folders --company-id=1 --user-id=1
+```
+
+The command intentionally requires tenant context. Do not rely on default company or user ids in production.
+
+Use tagged versions in host applications:
+
+```bash
+composer require lalalili/media-manager:^0.1
 ```

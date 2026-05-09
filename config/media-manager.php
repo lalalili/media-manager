@@ -7,7 +7,9 @@ return [
         'media'  => null,
     ],
 
-    'pages' => [],
+    'pages' => [
+        Lalalili\MediaManager\Pages\FileManager::class,
+    ],
 
     'folder_types' => [
         'root'         => 1,
@@ -16,6 +18,10 @@ return [
         'public'       => 4,
         'private'      => 5,
         'subfolder'    => 6,
+    ],
+
+    'collections' => [
+        'files' => 'files',
     ],
 
     'tenant_resolver' => Lalalili\MediaManager\Support\NullMediaTenantResolver::class,

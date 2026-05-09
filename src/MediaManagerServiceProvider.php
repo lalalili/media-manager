@@ -13,7 +13,8 @@ class MediaManagerServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('media-manager')
-            ->hasConfigFile('media-manager');
+            ->hasConfigFile('media-manager')
+            ->hasViews();
     }
 
     public function registeringPackage(): void

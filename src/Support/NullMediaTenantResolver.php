@@ -19,6 +19,6 @@ class NullMediaTenantResolver implements MediaTenantResolver
 
     public function canAccessManager(?Authenticatable $user): bool
     {
-        return true;
+        return false;
     }
 }
