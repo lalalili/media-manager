@@ -13,5 +13,16 @@ it('uses a stable plugin id', function (): void {
 });
 
 it('denies manager access by default', function (): void {
-    expect((new NullMediaTenantResolver())->canAccessManager(null))->toBeFalse();
+    expect((new NullMediaTenantResolver)->canAccessManager(null))->toBeFalse();
+});
+
+it('keeps reusable folder capabilities configurable for host upload flows', function (): void {
+    expect(config('media-manager.folder_types'))->toHaveKeys([
+        'root',
+        'public_root',
+        'private_root',
+        'public',
+        'private',
+        'subfolder',
+    ])->and(config('media-manager.upload_center'))->toBeNull();
 });
