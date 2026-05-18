@@ -19,7 +19,8 @@ class MediaManagerPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        $pages = collect(config('media-manager.pages', []))
+        $configuredPages = config('media-manager.pages', []);
+        $pages = collect(is_array($configuredPages) ? $configuredPages : [])
             ->filter(fn (string $page): bool => class_exists($page))
             ->unique()
             ->values()
@@ -30,7 +31,5 @@ class MediaManagerPlugin implements Plugin
         }
     }
 
-    public function boot(Panel $panel): void
-    {
-    }
+    public function boot(Panel $panel): void {}
 }

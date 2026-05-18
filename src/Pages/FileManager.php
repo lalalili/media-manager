@@ -13,14 +13,15 @@ use Lalalili\MediaManager\Contracts\MediaTenantResolver;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class FileManager extends Page
 {
     use WithFileUploads;
 
-    protected static string | \BackedEnum | null $navigationIcon = Heroicon::Folder;
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::Folder;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Media';
+    protected static string|\UnitEnum|null $navigationGroup = 'Media';
 
     protected static ?string $title = 'File Manager';
 
@@ -34,7 +35,7 @@ class FileManager extends Page
 
     public mixed $upload = null;
 
-    public function getTitle(): string | Htmlable
+    public function getTitle(): string|Htmlable
     {
         return 'File Manager';
     }
@@ -52,7 +53,7 @@ class FileManager extends Page
         $folderModel = $this->folderModel();
 
         if (! $folderModel) {
-            return new EloquentCollection();
+            return new EloquentCollection;
         }
 
         return $folderModel::query()
@@ -78,11 +79,11 @@ class FileManager extends Page
         }
 
         /** @var Model $folder */
-        $folder = new $folderModel();
+        $folder = new $folderModel;
         $table = $folder->getTable();
         $attributes = [
-            'name'      => $this->folderName,
-            'slug'      => str($this->folderName)->slug()->toString(),
+            'name' => $this->folderName,
+            'slug' => str($this->folderName)->slug()->toString(),
             'parent_id' => $this->selectedFolderId,
         ];
 
@@ -119,12 +120,12 @@ class FileManager extends Page
     {
         $this->validate([
             'selectedFolderId' => ['required', 'integer'],
-            'upload'           => ['required', 'file', 'max:102400'],
+            'upload' => ['required', 'file', 'max:102400'],
         ]);
 
         $folder = $this->selectedFolder();
 
-        if (! $folder instanceof HasMedia || ! method_exists($folder, 'addMedia')) {
+        if (! $folder instanceof HasMedia) {
             $this->configurationError('The configured folder model must implement Spatie\\MediaLibrary\\HasMedia.');
 
             return;
@@ -145,7 +146,7 @@ class FileManager extends Page
 
     public function deleteMedia(int $mediaId): void
     {
-        $mediaModel = config('media-manager.models.media') ?: \Spatie\MediaLibrary\MediaCollections\Models\Media::class;
+        $mediaModel = config('media-manager.models.media') ?: Media::class;
 
         if (! is_string($mediaModel) || ! class_exists($mediaModel)) {
             $this->configurationError('The configured media model does not exist.');
@@ -177,15 +178,21 @@ class FileManager extends Page
         return $folderModel::withoutGlobalScopes()->find($this->selectedFolderId);
     }
 
+    /**
+     * @return MediaCollection<int, Media>
+     */
     public function getSelectedFolderMedia(): MediaCollection
     {
         $folder = $this->selectedFolder();
 
-        if (! $folder instanceof HasMedia || ! method_exists($folder, 'getMedia')) {
-            return new MediaCollection();
+        if (! $folder instanceof HasMedia) {
+            return new MediaCollection;
         }
 
-        return $folder->getMedia(config('media-manager.collections.files', 'files'));
+        $collectionName = config('media-manager.collections.files', 'files');
+        $media = $folder->getMedia(is_string($collectionName) ? $collectionName : 'files');
+
+        return new MediaCollection($media->all());
     }
 
     protected function folderModel(): ?string
