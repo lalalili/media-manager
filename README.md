@@ -83,3 +83,11 @@ Use tagged versions in host applications:
 ```bash
 composer require lalalili/media-manager:^0.1
 ```
+
+## Tests
+
+From the package directory:
+
+```bash
+./vendor/bin/pest
+```
