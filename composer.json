@@ -32,6 +32,9 @@
             "providers": [
                 "Lalalili\\MediaManager\\MediaManagerServiceProvider"
             ]
+        },
+        "branch-alias": {
+            "dev-main": "1.0.x-dev"
         }
     },
     "scripts": {
