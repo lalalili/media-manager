@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.1.0] - 2026-07-27
+
+### Added
+
+- `MediaTenantResolver` 換入點的測試覆蓋。這個 contract 同時掌管存取控制
+  (`canAccessManager`)與租戶隔離(`currentCompanyId`),真正的實作由宿主
+  透過 `config('media-manager.tenant_resolver')` 提供,但先前完全沒有測試 ——
+  binding 若沒真的委派給宿主實作,宿主的權限判斷就形同虛設。
+  新測試涵蓋:預設 fail closed、依 config 解析實作、導覽列閘門確實委派、
+  租戶 id 透傳。
+
 ## [1.0.0] - 2026-07-27
 
 ### Changed
