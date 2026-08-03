@@ -46,13 +46,13 @@ class EnsureRootFoldersCommand extends Command
     protected function firstOrCreateFolder(string $folderModel, string $name, string $slug, mixed $type, ?int $parentId, int $companyId, int $userId): Model
     {
         /** @var Model $model */
-        $model = new $folderModel();
+        $model = new $folderModel;
         $table = $model->getTable();
         $type = $this->normalizeFolderType($type);
         $attributes = ['type' => $type];
         $values = [
-            'name'      => $name,
-            'slug'      => $slug,
+            'name' => $name,
+            'slug' => $slug,
             'parent_id' => $parentId,
         ];
 
